@@ -97,7 +97,7 @@ Creep.prototype.simpleBuilder = function () {
     }
   }
 };
-
+/*
 Creep.prototype.simpleMiner = function (num) {
   var source = this pos.find(FIND_SOURCES)[num]
   if (this.harvest(source)== ERR_NOT_IN_RANGE){
@@ -111,3 +111,4 @@ Creep.prototype.simpleMiner = function (num) {
     }
   }
 };
+*/
