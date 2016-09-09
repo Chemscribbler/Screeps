@@ -74,6 +74,16 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
         var body = [WORK, WORK, WORK, WORK, WORK, MOVE];
       case 'truck':
         var body = [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]
+      case 'mDefender':
+        var parts = Math.floor(energyToUse/260);
+        for (i = 0; i < parts; i++){
+          body.push(ATTACK);
+          body.push(ATTACK);
+          body.push(TOUGH);
+          body.push(TOUGH)
+          body.push(MOVE);
+          body.push(MOVE);
+        }
       default:
         return
 
