@@ -16,7 +16,6 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
   var healers = roomSpawningIn.find(FIND_MY_CREEPS).filter((creep) => creep.memory.role == 'healer');
   var numSources = roomSpawningIn.find(FIND_SOURCES).length;
 
-
   if(hostiles.length > 0 && 1===0){
     if(mdefenders.length < hostiles.length){
       return 'mDefender';
@@ -34,7 +33,7 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
   else if (miners.length < numSources && controllerLevel > 2){
     return 'miner';
   }
-  else if (builders.length < 4 && harvesters.length > 2){
+  else if (builders.length < 4 && harvesters.length >= 1){
     return 'builder';
   }
   else if (trucks.length < miners.length * 2 && miners >= 1){
@@ -51,19 +50,25 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
         var body = [WORK, CARRY, MOVE];
         break;
       case 'upgrader':
-        if (this.room.controller.level > 2){
-          var parts = floor(energyToUse/150);
-          var body = [] ;
-          for(i = 0; i < parts; i++){
-            body.push([CARRY, CARRY, MOVE]);
-          };
-        }
-        else{
-          var body = [WORK, CARRY, MOVE]
-        }
+        var parts = Math.floor(energyToUse/200);
+        console.log(parts);
+        var body = [] ;
+        for(i = 0; i < parts; i++){
+          body.push(WORK);
+          body.push(CARRY);
+          body.push(MOVE);
+        };
+//          console.log(body);
         break;
       case 'builder':
-        var body = [WORK, CARRY, MOVE];
+        var parts = Math.floor(energyToUse/200);
+        console.log(parts);
+        var body = [] ;
+        for(i = 0; i < parts; i++){
+          body.push(WORK);
+          body.push(CARRY);
+          body.push(MOVE);
+      };
         break;
       case 'miner':
         var body = [WORK, WORK, WORK, WORK, WORK, MOVE];
@@ -73,5 +78,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
         return
 
     }
+    console.log(body);
+    console.log(creepJob);
     return this.createCreep(body, undefined, {role: creepJob, loaded: false});
 }

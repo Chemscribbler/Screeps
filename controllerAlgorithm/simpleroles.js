@@ -1,11 +1,11 @@
 Creep.prototype.simpleHarvest = function () {
   if (this.memory.loaded === false && this.carry.energy === this.carryCapacity ){
       this.memory.loaded = true;
-      this.say('unloading')
+//      this.say('unloading')
   }
   else if (this.memory.loaded === true && this.carry.energy === 0){
     this.memory.loaded = false;
-    this.say('harvesting')
+//    this.say('harvesting')
   }
 
 //  var spot = Game.creeps[creep.name].pos;
@@ -72,11 +72,11 @@ Creep.prototype.simpleUpgrader = function () {
 Creep.prototype.simpleBuilder = function () {
   if (this.memory.loaded == true && this.carry.energy == 0){
     this.memory.loaded = false
-    this.say('getting energy');
+//    this.say('getting energy');
   }
   if (this.memory.loaded == false && this.carry.energy == this.carryCapacity){
     this.memory.loaded = true
-    this.say('building');
+//    this.say('building');
   }
 
   if(this.memory.loaded == true){
@@ -91,6 +91,19 @@ Creep.prototype.simpleBuilder = function () {
     }
   }
   else{
+    var targets = this.room.find(FIND_STRUCTURES, {
+                  filter: (structure) => {
+                      return (structure.structureType == STRUCTURE_EXTENSION ||
+                              structure.structureType == STRUCTURE_SPAWN ||
+                              structure.structureType == STRUCTURE_STORAGE ||
+                              structure.structureType == STRUCTURE_TOWER) && structure.energy > this.carryCapacity +200;
+                  }
+          });
+    if (targets.length !== 0) {
+      if(this.withdraw(targets[0], RESOURCE_ENERGY, this.carryCapacity)){
+        this.moveTo(targets[0])
+      }
+    }
     var source = this.pos.findClosestByPath(FIND_SOURCES);
     if (this.harvest(source)==   ERR_NOT_IN_RANGE){
       this.moveTo(source);

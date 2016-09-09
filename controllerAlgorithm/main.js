@@ -24,7 +24,7 @@ module.exports.loop = function () {
     var roomID= Game.spawns[spawner].pos.roomName;
 //    console.log(Game.rooms[roomID].energyAvailable);
     var orderCreep = Game.spawns[spawner].pickCreepToSpawn(roomID);
-    console.log(orderCreep);
+//    console.log(orderCreep);
     var energy = Game.rooms[roomID].energyAvailable;
     Game.spawns[spawner].chosenCreepSpawn(orderCreep, energy);
   }}
