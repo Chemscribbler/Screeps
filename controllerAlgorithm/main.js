@@ -15,6 +15,9 @@ StructureSpawn.prototype.pickCreepToSpawn= function(){
 module.exports.loop = function () {
   for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
+            roleClass = Memory.creeps[name].role + "s"
+            console.log(roleClass + " removing one from memory");
+            Memory.creepRoles[roleClass] -= 1;
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:' + name);
         }
@@ -24,7 +27,7 @@ module.exports.loop = function () {
     var roomID= Game.spawns[spawner].pos.roomName;
 //    console.log(Game.rooms[roomID].energyAvailable);
     var orderCreep = Game.spawns[spawner].pickCreepToSpawn(roomID);
-//    console.log(orderCreep);
+    console.log("Ordering " + orderCreep);
     var energy = Game.rooms[roomID].energyAvailable;
     Game.spawns[spawner].chosenCreepSpawn(orderCreep, energy);
   }}
