@@ -29,7 +29,7 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
   var rdefenders = Memory.creepRoles['rdefenders']
 
   if(hostiles.length > 0 && 1===0){
-    if(mdefenders.length < hostiles.length){
+    if(mdefenders < hostiles.length){
       return 'mDefender';
     }
     else{

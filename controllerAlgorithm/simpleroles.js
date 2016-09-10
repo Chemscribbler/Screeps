@@ -104,9 +104,11 @@ Creep.prototype.simpleBuilder = function () {
         this.moveTo(targets[0])
       }
     }
-    var source = this.pos.findClosestByPath(FIND_SOURCES);
-    if (this.harvest(source)==   ERR_NOT_IN_RANGE){
-      this.moveTo(source);
+    else{
+      var source = this.pos.findClosestByPath(FIND_SOURCES);
+      if (this.harvest(source)==   ERR_NOT_IN_RANGE){
+        this.moveTo(source);
+      }
     }
   }
 };
