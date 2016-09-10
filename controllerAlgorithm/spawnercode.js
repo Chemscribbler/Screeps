@@ -36,7 +36,7 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
       return 'rDefender';
     }
   }
-  else if(numSources > harvesters && controllerLevel < 3){
+  else if(numSources > harvesters && (controllerLevel < 3 || roomSpawningIn.energyAvailable < 550)){
     return 'harvester';
   }
   else if (upgraders < 3 * numSources && harvesters> 0) {
@@ -60,7 +60,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
 //    console.log(energyToUse);
     switch (creepJob) {
       case 'harvester':
-        var body = [WORK, CARRY, MOVE];
+        var body = [WORK, CARRY, CARRY, CARRY, MOVE, MOVE];
         break;
       case 'upgrader':
         var parts = Math.floor(energyToUse/200);
@@ -103,7 +103,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
     }
 //    console.log(body);
 //    console.log(creepJob);
-  if (body.length > 2) {
+  if (energyToUse > 200) {
   Memory.creepRoles[creepJob+"s"] += 1;
   }
     return this.createCreep(body, undefined, {role: creepJob, loaded: false});
