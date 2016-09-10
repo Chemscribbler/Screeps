@@ -1,0 +1,2 @@
+Instead of running the find for each role, store a list of filled roles in the memory.
+Only issue is how to deal with it when cleaning, perhaps extend the algorithm a bit and just check the role of the dead creep.
