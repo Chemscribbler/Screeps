@@ -88,7 +88,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
       case 'truck':
         var body = [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]
       case 'mDefender':
-        var parts = Math.floor(energyToUse/260);
+        var parts = Math.floor(energyToUse/280);
         for (i = 0; i < parts; i++){
           body.push(ATTACK);
           body.push(ATTACK);
@@ -104,7 +104,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
 //    console.log(body);
 //    console.log(creepJob);
   if (body.length > 2) {
-  Memory.creepRoles[creepJob+"s"] += 1;
+    Memory.creepRoles[creepJob+"s"] += 1;
   }
     return this.createCreep(body, undefined, {role: creepJob, loaded: false});
 }

@@ -2,7 +2,7 @@
 //var roadBuilder = require('road.Builder');
 require('spawnercode');
 require('simpleroles');
-
+require('tier3roles');
 /*
 StructureSpawn.prototype.pickCreepToSpawn= function(){
   var body = [WORK, CARRY, MOVE];
@@ -47,8 +47,11 @@ module.exports.loop = function () {
         creep.simpleBuilder();
         break;
       case 'miner':
-        creep.simpleMiner(miners);
-        miners += 1;
+        creep.posMiner();
+        break;
+      case 'truck':
+        creap.tier3Truck();
+        break;
     }
   }
 }
