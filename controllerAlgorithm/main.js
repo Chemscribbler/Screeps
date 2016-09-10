@@ -25,7 +25,7 @@ module.exports.loop = function () {
   if(Game.time % 20 === 0){
   for (var spawner in Game.spawns){
     var roomID= Game.spawns[spawner].pos.roomName;
-//    console.log(Game.rooms[roomID].energyAvailable);
+    console.log(Game.rooms[roomID].energyAvailable);
     var orderCreep = Game.spawns[spawner].pickCreepToSpawn(roomID);
     console.log("Ordering " + orderCreep);
     var energy = Game.rooms[roomID].energyAvailable;

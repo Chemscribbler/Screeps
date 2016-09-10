@@ -103,6 +103,8 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
     }
 //    console.log(body);
 //    console.log(creepJob);
-    Memory.creepRoles[creepJob+"s"] += 1;
+  if (body.length > 2) {
+  Memory.creepRoles[creepJob+"s"] += 1;
+  }
     return this.createCreep(body, undefined, {role: creepJob, loaded: false});
 }
