@@ -100,7 +100,7 @@ Creep.prototype.simpleBuilder = function () {
                   }
           });
     if (targets.length !== 0) {
-      if(this.withdraw(targets[0], RESOURCE_ENERGY, this.carryCapacity)){
+      if(this.withdraw(this.pos.findClosestByPath(targets), RESOURCE_ENERGY, this.carryCapacity)){
         this.moveTo(targets[0])
       }
     }

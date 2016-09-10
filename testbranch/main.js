@@ -15,7 +15,7 @@ StructureSpawn.prototype.pickCreepToSpawn= function(){
 module.exports.loop = function () {
   for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
-            roleClass = Memory.creeps[name].role + "s"
+            var roleClass = Memory.creeps[name].role + "s"
             console.log(roleClass + " removing one from memory");
             Memory.creepRoles[roleClass] -= 1;
             delete Memory.creeps[name];
