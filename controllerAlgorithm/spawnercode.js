@@ -93,13 +93,13 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
         break;
       case 'miner':
         body = []
-        if(energyToUse ===550){
+        if(energyToUse > 550){
           var body = [WORK, WORK, WORK, WORK, WORK, MOVE];
         }
         break;
       case 'truck':
         var body =[]
-        if (energyToUse === 300) {
+        if (energyToUse > 300) {
           body = [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]
         }
         break;
