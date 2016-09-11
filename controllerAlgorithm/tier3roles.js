@@ -55,13 +55,12 @@ Creep.prototype.tier3Truck = function () {
     }
   }*/
     if (this.memory.loaded == false) {
-    var targets = this.room.find(FIND_DROPPED_RESOURCES);
-    if(targets.length > 0){
-      if (this.pickup(targets[0]) == ERR_NOT_IN_RANGE) {
-        this.moveTo(targets[0])
-      }
+    var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+    if (this.pickup(target) == ERR_NOT_IN_RANGE) {
+      this.moveTo(target)
     }
   }
+
   else {
     var targets = this.room.find(FIND_STRUCTURES, {
                   filter: (structure) => {

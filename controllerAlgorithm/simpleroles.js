@@ -52,7 +52,12 @@ Creep.prototype.simpleUpgrader = function () {
   if(this.carry.energy == 0 && this.memory.loaded == true){
     this.memory.loaded = false;
   }
-
+  var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+  if(target !== undefined){
+    if (this.pickup(target) == ERR_NOT_IN_RANGE) {
+    this.moveTo(target)
+    }
+  }
   if(this.memory.loaded == false) {
     var targets = this.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
@@ -104,6 +109,12 @@ Creep.prototype.simpleBuilder = function () {
     }
   }
   else{
+    var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+    if(target !== undefined){
+      if (this.pickup(target) == ERR_NOT_IN_RANGE) {
+      this.moveTo(target)
+      }
+    }
     var targets = this.room.find(FIND_STRUCTURES, {
                   filter: (structure) => {
                       return (structure.structureType == STRUCTURE_SPAWN ||
