@@ -22,6 +22,7 @@ Creep.prototype.simpleHarvest = function () {
                   filter: (structure) => {
                       return (structure.structureType == STRUCTURE_EXTENSION ||
                               structure.structureType == STRUCTURE_SPAWN ||
+                              structure.structureType == STRUCTURE_CONTAINER ||
                               structure.structureType == STRUCTURE_STORAGE ||
                               structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
                   }
@@ -53,15 +54,27 @@ Creep.prototype.simpleUpgrader = function () {
   }
 
   if(this.memory.loaded == false) {
-/*    storageSites = this.room.find(STRUCTURE_STORAGE).filter((s) => s.structureType === 'storage')
-    for(i=0; i < storageSites.length; i++){
-       this.room.storageSites[i].store[RESOURCE_ENERGY]
-    }
-  */      var source = this.pos.findClosestByPath(FIND_SOURCES);
-        if(this.harvest(source) == ERR_NOT_IN_RANGE) {
+    var targets = this.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_SPAWN ||
+                            structure.structureType == STRUCTURE_CONTAINER ||
+                            structure.structureType == STRUCTURE_STORAGE)
+                            && structure.energy > this.carryCapacity +200;
+                }
+        });
+    if (targets.length !== 0) {
+        var target = this.pos.findClosestByPath(targets)
+        if(this.withdraw(target, RESOURCE_ENERGY, this.carryCapacity) == ERR_NOT_IN_RANGE){
+          this.moveTo(target)
+          }
+        }
+    else{
+     var source = this.pos.findClosestByPath(FIND_SOURCES);
+     if(this.harvest(source) == ERR_NOT_IN_RANGE) {
             this.moveTo(source);
           }
-  }
+        }
+      }
   else {
       if(this.upgradeController(this.room.controller) == ERR_NOT_IN_RANGE) {
           this.moveTo(this.room.controller);
@@ -93,10 +106,10 @@ Creep.prototype.simpleBuilder = function () {
   else{
     var targets = this.room.find(FIND_STRUCTURES, {
                   filter: (structure) => {
-                      return (structure.structureType == STRUCTURE_EXTENSION ||
-                              structure.structureType == STRUCTURE_SPAWN ||
-                              structure.structureType == STRUCTURE_STORAGE ||
-                              structure.structureType == STRUCTURE_TOWER) && structure.energy > this.carryCapacity +200;
+                      return (structure.structureType == STRUCTURE_SPAWN ||
+                              structure.structureType == STRUCTURE_CONTAINER ||
+                              structure.structureType == STRUCTURE_STORAGE)
+                              && structure.energy > this.carryCapacity +200;
                   }
           });
     if (targets.length !== 0) {
@@ -109,6 +122,15 @@ Creep.prototype.simpleBuilder = function () {
       if (this.harvest(source)==   ERR_NOT_IN_RANGE){
         this.moveTo(source);
       }
+    }
+  }
+};
+
+Creep.prototype.simpleDefender = function () {
+  var hostile = this.room.findClosestByPath(FIND_HOSTILE_CREEPS);
+  if(hostile != undefined){
+    if(this.attack(hostile) == ERR_NOT_IN_RANGE){
+      this.moveTo(hostile)
     }
   }
 };

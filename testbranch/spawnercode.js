@@ -28,6 +28,7 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
   var mdefenders = Memory.creepRoles['mdefenders']
   var rdefenders = Memory.creepRoles['rdefenders']
   console.log("Harvesters: " + harvesters + " Upgraders: " + upgraders + " Builders: " + builders);
+  console.log("Miners" + miners+ " Trucks: " + trucks);
   if(hostiles.length > 0 && 1===0){
     if(mdefenders < hostiles.length){
       return 'mDefender';
@@ -36,20 +37,20 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
       return 'rDefender';
     }
   }
-  else if(numSources > harvesters && controllerLevel < 3){
+  else if(numSources * 2 > harvesters && controllerLevel < 3){
     return 'harvester';
   }
-  else if (upgraders < 3 * numSources && harvesters> 0) {
+  else if (upgraders < 3 * numSources && (harvesters || trucks) > 0) {
     return 'upgrader';
+  }
+  else if (trucks < miners && miners >= 1){
+    return 'truck';
   }
   else if (miners < numSources && controllerLevel > 2){
     return 'miner';
   }
-  else if (builders < 4 && harvesters >= 1){
+  else if (builders < 4 && (harvesters || trucks) >= 1){
     return 'builder';
-  }
-  else if (trucks < miners * 2 && miners >= 1){
-    return 'truck';
   }
   else{
     return null;
@@ -60,7 +61,14 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
 //    console.log(energyToUse);
     switch (creepJob) {
       case 'harvester':
-        var body = [WORK, CARRY, MOVE];
+        var parts = Math.floor(energyToUse/200);
+//        console.log(parts);
+        var body = [] ;
+        for(i = 0; i < parts; i++){
+          body.push(WORK);
+          body.push(CARRY);
+          body.push(MOVE);
+      };
         break;
       case 'upgrader':
         var parts = Math.floor(energyToUse/200);
@@ -85,10 +93,12 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
         break;
       case 'miner':
         var body = [WORK, WORK, WORK, WORK, WORK, MOVE];
+        break;
       case 'truck':
         var body = [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]
+        break;
       case 'mDefender':
-        var parts = Math.floor(energyToUse/260);
+        var parts = Math.floor(energyToUse/280);
         for (i = 0; i < parts; i++){
           body.push(ATTACK);
           body.push(ATTACK);
@@ -97,6 +107,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
           body.push(MOVE);
           body.push(MOVE);
         }
+        break;
       default:
         return
 
@@ -104,7 +115,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
 //    console.log(body);
 //    console.log(creepJob);
   if (body.length > 2) {
-  Memory.creepRoles[creepJob+"s"] += 1;
+    Memory.creepRoles[creepJob+"s"] += 1;
   }
-    return this.createCreep(body, undefined, {role: creepJob, loaded: false});
+    return this.createCreep(body, undefined, {role: creepJob, loaded: false, mine: "none"});
 }
