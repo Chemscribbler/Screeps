@@ -25,7 +25,7 @@ Creep.prototype.posMiner = function () {
       //console.log(mSource.pos.x);
       console.log(mSource.id);
       if (mSource.checkMined() == false) {
-        this.memory = {"mine" : mSource.id};
+        this.memory.mine =  mSource.id;
       }
     }
   }
@@ -38,29 +38,28 @@ Creep.prototype.posMiner = function () {
 };
 
 Creep.prototype.tier3Truck = function () {
-  if (this.memory.loaded == false && this.carry.energy == this.carryCapacity){
-    this.memory.loaded = true;
+  if (this.memory.loaded === false && this.carry.energy === this.carryCapacity ){
+      this.memory.loaded = true;
+//      this.say('unloading')
   }
-  if(this.memory.loaded == true && this.carry.energy == 0){
+  else if (this.memory.loaded === true && this.carry.energy === 0){
     this.memory.loaded = false;
-    for (var i = 0; i < energyMines.length; i++) {
+//    this.say('harvesting')
+  }
+  /*if (/*this.memory.toPickUp == undefined && this.memory.loaded == false) {
+    /*for (var i = 0; i < energyMines.length; i++) {
       var dropped_energy = energyMines[i].room.findInRange(FIND_RESOURCE_ENERGY, 2);
       if (dropped_energy.length > 0){
         this.memory = {'toPickUp' : dropped_energy[0]};
       }
     }
-  }
-  if (this.memory.toPickUp == undefined && this.memory.loaded == false) {
-    for (var i = 0; i < energyMines.length; i++) {
-      var dropped_energy = energyMines[i].room.findInRange(FIND_RESOURCE_ENERGY, 2);
-      if (dropped_energy.length > 0){
-        this.memory = {'toPickUp' : dropped_energy[0]};
+  }*/
+    if (this.memory.loaded == false) {
+    var targets = this.room.find(FIND_DROPPED_RESOURCES);
+    if(targets.length > 0){
+      if (this.pickup(targets[0]) == ERR_NOT_IN_RANGE) {
+        this.moveTo(targets[0])
       }
-    }
-  }
-  else if (this.memory.loaded == false) {
-    if (this.pickup(this.memory.toPickUp)== ERR_NOT_IN_RANGE) {
-      this.moveTo(this.memory.toPickUp)
     }
   }
   else {

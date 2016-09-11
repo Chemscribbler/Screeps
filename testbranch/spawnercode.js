@@ -40,16 +40,16 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
   else if(numSources * 2 > harvesters && controllerLevel < 3){
     return 'harvester';
   }
-  else if (upgraders < 3 * numSources && harvesters> 0) {
+  else if (upgraders < 3 * numSources && (harvesters || trucks) > 0) {
     return 'upgrader';
   }
-  else if (trucks < miners * 2 && miners >= 1){
+  else if (trucks < miners && miners >= 1){
     return 'truck';
   }
   else if (miners < numSources && controllerLevel > 2){
     return 'miner';
   }
-  else if (builders < 4 && harvesters >= 1){
+  else if (builders < 4 && (harvesters || trucks) >= 1){
     return 'builder';
   }
   else{
@@ -93,8 +93,10 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
         break;
       case 'miner':
         var body = [WORK, WORK, WORK, WORK, WORK, MOVE];
+        break;
       case 'truck':
         var body = [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]
+        break;
       case 'mDefender':
         var parts = Math.floor(energyToUse/280);
         for (i = 0; i < parts; i++){
@@ -105,6 +107,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
           body.push(MOVE);
           body.push(MOVE);
         }
+        break;
       default:
         return
 
@@ -114,5 +117,5 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
   if (body.length > 2) {
     Memory.creepRoles[creepJob+"s"] += 1;
   }
-    return this.createCreep(body, undefined, {role: creepJob, loaded: false});
+    return this.createCreep(body, undefined, {role: creepJob, loaded: false, mine: "none"});
 }
