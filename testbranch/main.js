@@ -33,7 +33,7 @@ module.exports.loop = function () {
   }}
   for(var name in Game.creeps){
     var creep = Game.creeps[name]
-    var miners = 0
+    
     switch (creep.memory.role) {
       case 'harvester':
         creep.simpleHarvest();

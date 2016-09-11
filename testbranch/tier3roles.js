@@ -1,6 +1,6 @@
-Source.prototype.checkMined = function () {
-  xpos = this.room.pos.x;
-  ypos = this.room.pos.y;
+RoomObject.prototype.checkMined = function () {
+  var xpos = this.pos.x;
+  var ypos = this.pos.y;
   var miner = false;
   var checks = this.room.lookForAtArea(LOOK_CREEPS, xpos - 1, ypos -1, xpos + 1, ypos +1, true);
   for (var check in checks) {
@@ -17,16 +17,22 @@ Source.prototype.checkMined = function () {
 
 Creep.prototype.posMiner = function () {
   var source = this.memory.mine;
-  if ( source == undefined) {
+  //console.log(source);
+  if ( source == 'none') {
     for (var i = 0; i < Memory.energyMines.length; i++) {
-      if (Memory.energyMines[i].checkMined == false) {
-        this.memory = {"mine" : Memory.energyMines[i]};
+      console.log(i);
+      var mSource = Game.getObjectById(Memory.energyMines[i].id)
+      //console.log(mSource.pos.x);
+      console.log(mSource.id);
+      if (mSource.checkMined() == false) {
+        this.memory = {"mine" : mSource.id};
       }
     }
   }
   else{
-    if (this.harvest(source == ERR_NOT_IN_RANGE)){
-      this.moveTo(source);
+    var mine = Game.getObjectById(source);
+    if (this.harvest(mine) == ERR_NOT_IN_RANGE){
+      this.moveTo(mine);
     }
   }
 };
@@ -63,6 +69,7 @@ Creep.prototype.tier3Truck = function () {
                       return (structure.structureType == STRUCTURE_EXTENSION ||
                               structure.structureType == STRUCTURE_SPAWN ||
                               structure.structureType == STRUCTURE_STORAGE ||
+                              structure.structureType == STRUCTURE_CONTAINER ||
                               structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
                   }
     });
