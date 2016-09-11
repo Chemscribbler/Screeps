@@ -24,7 +24,7 @@ Creep.prototype.simpleHarvest = function () {
                               structure.structureType == STRUCTURE_SPAWN ||
                               structure.structureType == STRUCTURE_CONTAINER ||
                               structure.structureType == STRUCTURE_STORAGE ||
-                              structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                              structure.structureType == STRUCTURE_TOWER) && (structure.energy <= structure.energyCapacity);
                   }
           });
 
@@ -59,12 +59,12 @@ Creep.prototype.simpleUpgrader = function () {
                     return (structure.structureType == STRUCTURE_SPAWN ||
                             structure.structureType == STRUCTURE_CONTAINER ||
                             structure.structureType == STRUCTURE_STORAGE)
-                            && structure.energy > this.carryCapacity +200;
+                            && structure.energy > 0;
                 }
         });
     if (targets.length !== 0) {
         var target = this.pos.findClosestByPath(targets)
-        if(this.withdraw(target, RESOURCE_ENERGY, this.carryCapacity) == ERR_NOT_IN_RANGE){
+        if(this.withdraw(target, RESOURCE_ENERGY, this.carryCapacity-this.carry.energy) == ERR_NOT_IN_RANGE){
           this.moveTo(target)
           }
         }
@@ -109,11 +109,11 @@ Creep.prototype.simpleBuilder = function () {
                       return (structure.structureType == STRUCTURE_SPAWN ||
                               structure.structureType == STRUCTURE_CONTAINER ||
                               structure.structureType == STRUCTURE_STORAGE)
-                              && structure.energy > this.carryCapacity +200;
+                              && structure.energy > 0;
                   }
           });
     if (targets.length !== 0) {
-      if(this.withdraw(this.pos.findClosestByPath(targets), RESOURCE_ENERGY, this.carryCapacity)){
+      if(this.withdraw(this.pos.findClosestByPath(targets), RESOURCE_ENERGY, this.carryCapacity-this.carry.energy)){
         this.moveTo(targets[0])
       }
     }
