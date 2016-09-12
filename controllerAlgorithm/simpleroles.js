@@ -53,9 +53,11 @@ Creep.prototype.simpleUpgrader = function () {
     this.memory.loaded = false;
   }
   var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-  if(target !== undefined){
-    if (this.pickup(target) == ERR_NOT_IN_RANGE) {
-    this.moveTo(target)
+  if(target !== null){
+    if(target.amount > this.carryCapacity){
+      if (this.pickup(target) == ERR_NOT_IN_RANGE) {
+        this.moveTo(target)
+      }
     }
   }
   if(this.memory.loaded == false) {
@@ -110,9 +112,11 @@ Creep.prototype.simpleBuilder = function () {
   }
   else{
     var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-    if(target !== undefined){
-      if (this.pickup(target) == ERR_NOT_IN_RANGE) {
-      this.moveTo(target)
+    if(target !== null){
+      if(target.amount > this.carryCapacity){
+        if (this.pickup(target) == ERR_NOT_IN_RANGE) {
+          this.moveTo(target)
+        }
       }
     }
     var targets = this.room.find(FIND_STRUCTURES, {
