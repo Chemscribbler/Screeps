@@ -1,2 +1,5 @@
-Instead of running the find for each role, store a list of filled roles in the memory.
-Only issue is how to deal with it when cleaning, perhaps extend the algorithm a bit and just check the role of the dead creep.
+Plan of attack:
+Create function that calculates path for creep based on it's remembered target
+Stores that path into its memory and follows that
+Main function loops through list of creeps (what is going to happen array order changes by removing a creep?)
+And re-paths 1/per tick max
