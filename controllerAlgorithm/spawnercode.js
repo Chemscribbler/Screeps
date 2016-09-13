@@ -68,7 +68,7 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
           body.push(WORK);
           body.push(CARRY);
           body.push(MOVE);
-      };
+        };
         break;
       case 'upgrader':
         var parts = Math.floor(energyToUse/200);
