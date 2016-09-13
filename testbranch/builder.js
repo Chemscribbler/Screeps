@@ -18,37 +18,36 @@ Creep.prototype.simpleBuilder = function () {
           }
         )
       }
-      else{
+      if (!target){
         target = this.pos.findClosestByPath(FIND_SOURCES);
       }
     }
   }
-//    this.say('getting energy');
+// Switches state to full & gives it build site
   if (this.memory.loaded == false && this.carry.energy == this.carryCapacity){
     this.memory.loaded = true;
-
+    this.memory.target = Memory.conSites[0]
 //    this.say('building');
   }
-  if (Memory.conSites.length > 0){
+  if (Memory.conSites.length > 0){ //this could probably be removed, currently filters if B acts as Upgrader
     var target = Game.getObjectById(this.memory.target)
     if (this.memory.loaded == true) {
-      if (target != null) {
-        if (this.build(target)) {
+      if (target.structureType != undefined) {
+        if (this.build(target) == ERR_NOT_IN_RANGE) {
           this.moveIt();
         }
-      }
-      else {
-        this.memory.target = Memory.conSites[0];
+        if(this.build(target)== ERR_INVALID_TARGET) {
+          this.memory.target = Memory.conSites[0];
+        }
       }
     }
     else if (this.memory.loaded == false) {
       if (this.pickup(target) == ERR_NOT_IN_RANGE) {
           this.moveIt();
-        }
+      }
       else if (this.pickup(target) == ERR_INVALID_TARGET) {
         this.harvest(target);
-        }
-
+      }
     }
   }
   else{
