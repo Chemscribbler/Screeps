@@ -66,7 +66,7 @@ Creep.prototype.simpleUpgrader = function () {
                     return (structure.structureType == STRUCTURE_SPAWN ||
                             structure.structureType == STRUCTURE_CONTAINER ||
                             structure.structureType == STRUCTURE_STORAGE)
-                            && structure.energy > 0;
+                            && structure.energy > this.carryCapacity;
                 }
         });
     if (targets.length !== 0) {
@@ -124,7 +124,7 @@ Creep.prototype.simpleBuilder = function () {
                       return (structure.structureType == STRUCTURE_SPAWN ||
                               structure.structureType == STRUCTURE_CONTAINER ||
                               structure.structureType == STRUCTURE_STORAGE)
-                              && structure.energy > 0;
+                              && structure.energy > this.carryCapacity;
                   }
           });
     if (targets.length !== 0) {
