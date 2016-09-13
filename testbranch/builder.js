@@ -2,26 +2,7 @@ Creep.prototype.simpleBuilder = function () {
   // This code checkes if the builder has used all of it energy & assigns it a new place to get more energy
   if (this.memory.loaded == true && this.carry.energy == 0){
     this.memory.loaded = false;
-    if (this.room.controller.level < 3) {
-      var path = this.pos.findClosestByPath(FIND_SOURCES);
-      this.memory.path = path;
-    }
-    else{
-      var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-      if (!target) {
-        target = this.pos.findClosestByPath(FIND_STRUCTURES).filter(
-          (s) => {
-              return (structure.structureType == STRUCTURE_SPAWN ||
-                      structure.structureType == STRUCTURE_CONTAINER ||
-                      structure.structureType == STRUCTURE_STORAGE ||
-                      structure.structureType == STRUCTURE_TOWER) && (structure.energy > this.energyCapacity);
-          }
-        )
-      }
-      if (!target){
-        target = this.pos.findClosestByPath(FIND_SOURCES);
-      }
-    }
+    this.findEnergyPickup();
   }
 // Switches state to full & gives it build site
   if (this.memory.loaded == false && this.carry.energy == this.carryCapacity){
@@ -84,3 +65,4 @@ Creep.prototype.simpleBuilder = function () {
     }
   }
 };
+*/

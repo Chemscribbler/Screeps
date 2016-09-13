@@ -3,3 +3,10 @@ Create function that calculates path for creep based on it's remembered target
 Stores that path into its memory and follows that
 Main function loops through list of creeps (what is going to happen array order changes by removing a creep?)
 And re-paths 1/per tick max
+
+
+
+*****
+CURRENTLY when spawned the creep cannot get itself to a state where it finds
+targets and paths by itself, have to manually give it a target & path to start
+This causes crashes at the moment ... oops
