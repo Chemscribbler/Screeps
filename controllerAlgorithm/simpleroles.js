@@ -24,7 +24,7 @@ Creep.prototype.simpleHarvest = function () {
                               structure.structureType == STRUCTURE_SPAWN ||
                               structure.structureType == STRUCTURE_CONTAINER ||
                               structure.structureType == STRUCTURE_STORAGE ||
-                              structure.structureType == STRUCTURE_TOWER) && (structure.energy <= structure.energyCapacity);
+                              structure.structureType == STRUCTURE_TOWER) && (structure.energy < structure.energyCapacity);
                   }
           });
 
