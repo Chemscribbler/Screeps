@@ -1,7 +1,7 @@
 StructureSpawn.prototype.pickCreepToSpawn= function(room){
   var roomSpawningIn = Game.rooms[room];
   var controllerLevel = roomSpawningIn.controller.level
-  var hostiles = roomSpawningIn.find(FIND_HOSTILE_CREEPS);
+  var hostiles = roomSpawningIn.find(FIND_CREEPS, {filter: (creep) => creep.my == false});
 //  console.log(roomSpawningIn)
 
 // Getting the number of each role in the room (currently this is done for every spawner, eventually could do this as a per-room function)
@@ -59,37 +59,50 @@ StructureSpawn.prototype.pickCreepToSpawn= function(room){
 
 StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
 //    console.log(energyToUse);
+  if (energyToUse > 200) {
     switch (creepJob) {
       case 'harvester':
-        var parts = Math.floor(energyToUse/200);
+        var parts = Math.floor(energyToUse/100);
 //        console.log(parts);
         var body = [] ;
         for(i = 0; i < parts; i++){
+          if(i % 2 == 0){
+            body.push(CARRY);
+            body.push(MOVE);
+          }
+          else{
           body.push(WORK);
-          body.push(CARRY);
-          body.push(MOVE);
-      };
+          }
+        };
         break;
       case 'upgrader':
-        var parts = Math.floor(energyToUse/200);
+        var parts = Math.floor(energyToUse/100);
 //        console.log(parts);
         var body = [] ;
         for(i = 0; i < parts; i++){
+          if(i % 2 == 0){
+            body.push(CARRY);
+            body.push(MOVE);
+          }
+          else{
           body.push(WORK);
-          body.push(CARRY);
-          body.push(MOVE);
+          }
         };
 //          console.log(body);
         break;
       case 'builder':
-        var parts = Math.floor(energyToUse/200);
+        var parts = Math.floor(energyToUse/100);
 //        console.log(parts);
         var body = [] ;
         for(i = 0; i < parts; i++){
+          if(i % 2 == 0){
+            body.push(CARRY);
+            body.push(MOVE);
+          }
+          else{
           body.push(WORK);
-          body.push(CARRY);
-          body.push(MOVE);
-      };
+          }
+        };
         break;
       case 'miner':
         body = []
@@ -120,8 +133,12 @@ StructureSpawn.prototype.chosenCreepSpawn = function(creepJob, energyToUse){
     }
 //    console.log(body);
 //    console.log(creepJob);
-  if (body.length > 2) {
-    Memory.creepRoles[creepJob+"s"] += 1;
-  }
-    return this.createCreep(body, undefined, {role: creepJob, loaded: false, mine: "none"});
-}
+    if (body.length > 2) {
+      Memory.creepRoles[creepJob+"s"] += 1;
+    }
+      return this.createCreep(body, undefined, {role: creepJob, loaded: false, target: "none", path: 'none'});
+ }
+/*  else{
+    return void
+    }
+*/}

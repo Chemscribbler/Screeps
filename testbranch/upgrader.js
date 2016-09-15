@@ -1,5 +1,9 @@
 Creep.prototype.simpleUpgrader = function () {
   var target = Game.getObjectById(this.memory.target)
+  if(!target){
+    this.memory.target = this.pos.findEnergyPickup();
+    this.pathSearch();
+  }
   if (this.memory.loaded == false && this.carryCapacity == this.carry.energy) {
     this.memory.loaded = true;
     this.memory.target = this.room.controller.id

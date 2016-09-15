@@ -1,5 +1,10 @@
 Creep.prototype.simpleBuilder = function () {
   // This code checkes if the builder has used all of it energy & assigns it a new place to get more energy
+  var target = Game.getObjectById(this.memory.target)
+  if(!target){
+    this.memory.target = this.pos.findEnergyPickup();
+    this.pathSearch();
+  }
   if (this.memory.loaded == true && this.carry.energy == 0){
     this.memory.loaded = false;
     this.findEnergyPickup();
@@ -11,7 +16,6 @@ Creep.prototype.simpleBuilder = function () {
 //    this.say('building');
   }
   if (Memory.conSites.length > 0){ //this could probably be removed, currently filters if B acts as Upgrader
-    var target = Game.getObjectById(this.memory.target)
     if (this.memory.loaded == true) {
       if (target.structureType != undefined) {
         if (this.build(target) == ERR_NOT_IN_RANGE) {

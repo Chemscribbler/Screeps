@@ -1,5 +1,9 @@
 Creep.prototype.simpleHarvester = function () {
   var target = Game.getObjectById(this.memory.target)
+  if(!target){
+    this.memory.target = this.pos.findClosestByPath();
+    this.pathSearch();
+  }
   if(this.memory.loaded == false && this.carry.energy == this.carryCapacity){
     this.memory.loaded = true;
     var targets = this.room.find(FIND_STRUCTURES, {
