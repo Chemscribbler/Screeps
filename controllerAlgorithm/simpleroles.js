@@ -35,7 +35,10 @@ Creep.prototype.simpleHarvest = function () {
         this.moveTo(target);
         }
       }
+    else{
+      this.simpleBuilder();
     }
+  }
   else {
     var source = this.pos.findClosestByPath(FIND_SOURCES);
     if (this.harvest(source) == ERR_NOT_IN_RANGE) {
@@ -52,7 +55,7 @@ Creep.prototype.simpleUpgrader = function () {
   if(this.carry.energy == 0 && this.memory.loaded == true){
     this.memory.loaded = false;
   }
-  var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+/*  var target = this.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
   if(target !== null){
     if(target.amount > this.carryCapacity){
       if (this.pickup(target) == ERR_NOT_IN_RANGE) {
@@ -74,15 +77,14 @@ Creep.prototype.simpleUpgrader = function () {
         if(this.withdraw(target, RESOURCE_ENERGY, this.carryCapacity-this.carry.energy) == ERR_NOT_IN_RANGE){
           this.moveTo(target)
           }
-        }
-    else{
+        }*/
+    if (this.memory.loaded == false) {
      var source = this.pos.findClosestByPath(FIND_SOURCES);
      if(this.harvest(source) == ERR_NOT_IN_RANGE) {
             this.moveTo(source);
           }
-        }
-      }
-  else {
+    }
+    else {
       if(this.upgradeController(this.room.controller) == ERR_NOT_IN_RANGE) {
           this.moveTo(this.room.controller);
       }
@@ -119,7 +121,7 @@ Creep.prototype.simpleBuilder = function () {
         }
       }
     }
-    var targets = this.room.find(FIND_STRUCTURES, {
+/*    var targets = this.room.find(FIND_STRUCTURES, {
                   filter: (structure) => {
                       return (structure.structureType == STRUCTURE_SPAWN ||
                               structure.structureType == STRUCTURE_CONTAINER ||
@@ -131,7 +133,7 @@ Creep.prototype.simpleBuilder = function () {
       if(this.withdraw(this.pos.findClosestByPath(targets), RESOURCE_ENERGY, this.carryCapacity-this.carry.energy)){
         this.moveTo(targets[0])
       }
-    }
+    }*/
     else{
       var source = this.pos.findClosestByPath(FIND_SOURCES);
       if (this.harvest(source)==   ERR_NOT_IN_RANGE){
