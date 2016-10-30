@@ -8,7 +8,7 @@ Room.prototype.creepList = function () {
   Memory.creepNum = listCreepIds.length
 };
 
-Room.prototype.conSiteList = function () {
+Room.prototype.conSiteList = function () {/*
   if (Game.time % 5 == 0) {
     var list = Game.rooms['sim'].find(FIND_CONSTRUCTION_SITES);
     var sitePriority = {
@@ -20,14 +20,14 @@ Room.prototype.conSiteList = function () {
       "road": 6,
       "wall": 7
     };
-    list.sort(function(a,b){
-      return (sitePriority[a.structureType.toString()]-sitePriority[b.structureType.toString()]);
-    });*/
+   list.sort(function(a,b){
+    return (sitePriority[a.structureType.toString()]-sitePriority[b.structureType.toString()]);
+  });
     var orderedSites = []
     for (var item in list) {
       orderedSites.push(item.id);
     };
     Memory.conSites = orderedSites
     return void
-  }
+  }*/
 };

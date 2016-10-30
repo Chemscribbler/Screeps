@@ -17,9 +17,11 @@ module.exports.loop = function () {
       }*/
   if (Game.time % (Memory.creepNum + 1) == 0) {
     for (var room in Game.rooms) {
+      //console.log(room);
       room.creepList()
     }
-  } else {
+  }
+  else {
     var pathingCreepId = Memory.CreepIds[Game.time % Memory.creepNum];
     var pathingCreep = Game.getObjectById(pathingCreepId);
     if(!pathingCreep){
